@@ -5,6 +5,8 @@ from db.database import get_user_by_name, create_user, create_user_token
 from openai import OpenAI
 import base64
 import os
+from PIL import Image
+import pytesseract
 
 app = FastAPI()
 
@@ -87,7 +89,7 @@ def kakao_callback(code: str):
             data={"error": str(e)}
         )
     
-@app.post("/analyze-receipt", response_model=ResponseSchema)
+@app.post("/analyze-receipt_gpt", response_model=ResponseSchema)
 async def analyze_receipt(file: UploadFile = File(...)):
     """
     업로드된 영수증 이미지를 OpenAI API로 분석합니다.
@@ -164,3 +166,34 @@ async def analyze_receipt(file: UploadFile = File(...)):
             msg="영수증 분석 중 서버 내부 오류",
             data={"error": str(e)}
         )
+    
+@app.post("/analyze-receipt", response_model=dict)
+async def analyze_receipt(file: UploadFile = File(...)):
+    """
+    업로드된 영수증 이미지를 분석하여 텍스트를 추출합니다.
+    """
+    try:
+        # 업로드된 파일 읽기
+        file_content = await file.read()
+        
+        # 이미지 로드
+        image = Image.open(io.BytesIO(file_content))
+        
+        # OCR로 텍스트 추출
+        extracted_text = pytesseract.image_to_string(image, lang="kor+eng")  # 한글+영어 지원
+        
+        # 텍스트 결과 반환
+        return {
+            "status": 200,
+            "msg": "텍스트 추출 성공",
+            "data": {
+                "text": extracted_text
+            }
+        }
+    
+    except Exception as e:
+        return {
+            "status": 500,
+            "msg": "텍스트 추출 중 오류 발생",
+            "error": str(e)
+        }
