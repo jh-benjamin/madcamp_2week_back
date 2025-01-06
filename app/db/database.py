@@ -78,3 +78,13 @@ def create_user_token(user_uuid: str):
     connection.close()
 
     return token_value
+
+# db/database.py 파일에 execute_query가 정의되어 있어야 합니다.
+def execute_query(query: str, params: tuple = ()):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(query, params)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
