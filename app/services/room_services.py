@@ -47,6 +47,9 @@ async def create_room_service(room_data: RoomRequest):
         for item in room_data.items:
             cursor.execute(item_query, [receiptId, item.menu, 0, item.details, item.price])
 
+        # 트랜잭션 커밋
+        connection.commit()
+
         return {
             "status": 201,
             "msg": "방이 성공적으로 생성되었습니다.",
@@ -64,3 +67,6 @@ async def create_room_service(room_data: RoomRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"방 생성 중 오류 발생: {str(e)}")
+    finally:
+        cursor.close()
+        connection.close()
