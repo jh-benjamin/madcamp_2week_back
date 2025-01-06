@@ -99,7 +99,7 @@ async def analyze_receipt(file: UploadFile = File(...)):
     """
     try:
 
-         # 파일 읽기
+         # 파일 읽
         file_content = await file.read()
         
         # 파일 타입 (예: image/jpeg)
@@ -156,11 +156,13 @@ async def analyze_receipt(file: UploadFile = File(...)):
                 }
             ],
         )
-
+        
+        print(response)
+        response_dict = response.to_dict()  # OpenAI 응답을 딕셔너리로 변환
         return ResponseSchema(
             status=200,
             msg="영수증 분석 성공",
-            data=response
+            data=response_dict
         )
 
     except Exception as e:
