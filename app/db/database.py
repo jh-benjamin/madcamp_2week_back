@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import uuid
 import secrets
 import hashlib
-
+        
 # DB 연결 설정
 def get_connection():
     try:
@@ -83,8 +83,10 @@ def create_user_token(user_uuid: str):
 def execute_query(query: str, params: tuple = ()):
     connection = get_connection()
     cursor = connection.cursor()
+
     cursor.execute(query, params)
     result = cursor.fetchall()
+    
     cursor.close()
     connection.close()
     return result

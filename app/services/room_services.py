@@ -18,7 +18,7 @@ async def create_room_service(room_data: RoomRequest):
         INSERT INTO rooms (title, hostUuid, numOfParticipants, createdAt, status)
         VALUES (%s, %s, %s, %s, %s)
         """
-        room_id = await execute_query(room_query, [title, host_uuid, num_of_participants, created_at, status])
+        room_id = execute_query(room_query, [title, host_uuid, num_of_participants, created_at, status])
 
         # 친구 UUID 저장
         friend_query = """
@@ -26,7 +26,7 @@ async def create_room_service(room_data: RoomRequest):
         VALUES (%s, %s)
         """
         for friend_uuid in friend_uuids:
-            await execute_query(friend_query, [room_id, friend_uuid])
+            execute_query(friend_query, [room_id, friend_uuid])
 
         # 영수증 데이터 저장
         item_query = """
@@ -34,7 +34,7 @@ async def create_room_service(room_data: RoomRequest):
         VALUES (%s, %s, %s, %s)
         """
         for item in room_data.items:
-            await execute_query(item_query, [room_id, item.menu, item.details, item.price])
+            execute_query(item_query, [room_id, item.menu, item.details, item.price])
 
         return {
             "status": 201,
