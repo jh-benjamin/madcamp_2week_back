@@ -161,14 +161,24 @@ async def analyze_receipt(file: UploadFile = File(...)):
         response_dict = response.to_dict()
 
         # OpenAI 응답에서 choices[0].message.content 추출
-        json_data = response_dict["choices"][0]["message"]["content"]
-        
-        print(json_data)
+        row_data = response_dict["choices"][0]["message"]["content"]
+
+
+        print(row_data)
+
+        start = row_data.find("{")
+        end = row_data.rfind("}") + 1
+        json_string = row_data[start:end]
+
+        data = json.loads(json_string)
+
+        print(data)
+        print(json.dumps(data, indent=4, ensure_ascii=False))
 
         return ResponseSchema(
             status=200,
             msg="영수증 분석 성공",
-            data=json_data
+            data=data
         )
 
     except Exception as e:
