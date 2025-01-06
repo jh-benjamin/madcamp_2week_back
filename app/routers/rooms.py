@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
-from app.services.room_services import create_room_service
-from app.schemas.rooms import RoomRequest, Item
+from services.room_services import create_room_service
+from schemas.rooms import RoomRequest, Item
 from schemas.response import ResponseSchema
 
 # 라우터 초기화
