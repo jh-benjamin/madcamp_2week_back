@@ -159,7 +159,7 @@ async def analyze_receipt(file: UploadFile = File(...)):
         )
 
         # OpenAI 응답에서 choices[0].message.content 추출
-        raw_content = response["choices"][0]["message"]["content"]
+        raw_content = response.choices[0].message["content"]  # 올바른 접근 방식
         
         # content에서 JSON 부분만 추출
         json_start_index = raw_content.find("{")
