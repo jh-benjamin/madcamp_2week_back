@@ -8,6 +8,8 @@ import os
 from PIL import Image
 import pytesseract
 import io  # io 모듈 추가
+import cv2
+import numpy as np
 
 app = FastAPI()
 
@@ -177,11 +179,9 @@ async def analyze_receipt(file: UploadFile = File(...)):
         # 업로드된 파일 읽기
         file_content = await file.read()
         
-        # 이미지 로드
-        image = Image.open(io.BytesIO(file_content))
-        
-        # OCR로 텍스트 추출
-        extracted_text = pytesseract.image_to_string(image, lang="kor+eng")  # 한글+영어 지원
+        # 전처리 후 OCR 실행
+        image = preprocess_image(file_content)
+        extracted_text = pytesseract.image_to_string(image, lang="kor+eng")
         
         # 텍스트 결과 반환
         return {
@@ -198,3 +198,18 @@ async def analyze_receipt(file: UploadFile = File(...)):
             "msg": "텍스트 추출 중 오류 발생",
             "error": str(e)
         }
+    
+# 이미지 전처리
+def preprocess_image(file_content):
+    np_img = np.frombuffer(file_content, np.uint8)
+    img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
+
+    # 그레이스케일 변환
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # 이진화
+    _, binary = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
+
+    # OpenCV 이미지 객체를 PIL 이미지 객체로 변환
+    processed_image = Image.fromarray(binary)
+    return processed_image
