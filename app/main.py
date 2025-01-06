@@ -10,6 +10,7 @@ import pytesseract
 import io  # io 모듈 추가
 import cv2
 import numpy as np
+import json
 
 app = FastAPI()
 
@@ -156,13 +157,22 @@ async def analyze_receipt(file: UploadFile = File(...)):
                 }
             ],
         )
+
+        # OpenAI 응답에서 choices[0].message.content 추출
+        raw_content = response["choices"][0]["message"]["content"]
         
-        print(response)
-        response_dict = response.to_dict()  # OpenAI 응답을 딕셔너리로 변환
+        # content에서 JSON 부분만 추출
+        json_start_index = raw_content.find("{")
+        json_data = raw_content[json_start_index:]
+        
+        print(json_data)
+        
+        parsed_data = json.loads(json_data)
+
         return ResponseSchema(
             status=200,
             msg="영수증 분석 성공",
-            data=response_dict
+            data=parsed_data
         )
 
     except Exception as e:
