@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import HTTPException
-from app.db.database import execute_query
-from app.schemas.rooms import RoomRequest, Item
+from db.database import execute_query
+from schemas.rooms import RoomRequest, Item
 
 async def create_room_service(room_data: RoomRequest):
     try:

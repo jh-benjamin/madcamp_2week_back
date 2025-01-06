@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from schemas.response import ResponseSchema
-from app.services.receipt_service import analyze_receipt_logic
+from services.receipt_service import analyze_receipt_logic
 from routers.auth import router as auth_router  # auth 라우터 가져오기
 from routers.rooms import router as room_router  # room 라우터
 
