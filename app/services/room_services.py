@@ -1,10 +1,13 @@
 from datetime import datetime
 from fastapi import HTTPException
-from db.database import execute_query
+from db.database import get_connection
 from schemas.rooms import RoomRequest, Item
 
 async def create_room_service(room_data: RoomRequest):
     try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
         # 방 데이터 준비
         title = room_data.title
         host_uuid = room_data.host_uuid
@@ -18,9 +21,10 @@ async def create_room_service(room_data: RoomRequest):
         INSERT INTO rooms (title, hostUuid, numOfParticipants, createdAt, status)
         VALUES (%s, %s, %s, %s, %s)
         """
-        room_id = execute_query(room_query, [title, host_uuid, num_of_participants, created_at, status])
+        cursor.execute(room_query, [title, host_uuid, num_of_participants, created_at, status])
+        room_id = cursor.lastrowid
 
-        print(room_id)
+        
 
         # 친구 UUID 저장
         friend_query = """
@@ -28,20 +32,20 @@ async def create_room_service(room_data: RoomRequest):
         VALUES (%s, %s, %s, %s)
         """
         for friend_uuid in friend_uuids:
-            execute_query(friend_query, [room_id, friend_uuid, 0, 0])
+            cursor.execute(friend_query, [room_id, friend_uuid, 0, 0])
 
         recipt_query = """
         INSERT INTO receipts (roomId) VALUES (%s)
         """
-        receiptId = execute_query(recipt_query, [room_id])
-
+        cursor.execute(recipt_query, [room_id])
+        receiptId = cursor.lastrowid
         # 영수증 데이터 저장
         item_query = """
         INSERT INTO receiptItems (receiptId, itemName, numOfCheckedItems, details, price)
         VALUES (%s, %s, %s, %s, %s)
         """
         for item in room_data.items:
-            execute_query(item_query, [receiptId, item.menu, 0, item.details, item.price])
+            cursor.execute(item_query, [receiptId, item.menu, 0, item.details, item.price])
 
         return {
             "status": 201,
