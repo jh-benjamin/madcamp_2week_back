@@ -87,7 +87,7 @@ def kakao_callback(code: str):
             data={"error": str(e)}
         )
     
-@app.get("/analyze-receipt", response_model=ResponseSchema)
+@app.post("/analyze-receipt", response_model=ResponseSchema)
 async def analyze_receipt(file: UploadFile = File(...)):
     """
     업로드된 영수증 이미지를 OpenAI API로 분석합니다.
