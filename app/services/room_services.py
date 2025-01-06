@@ -25,7 +25,7 @@ async def create_room_service(room_data: RoomRequest):
         # 친구 UUID 저장
         friend_query = """
         INSERT INTO roomParticipants (roomId, userUuid, amountOfMoney, isPaid)
-        VALUES (%s, %s)
+        VALUES (%s, %s, %d, %d)
         """
         for friend_uuid in friend_uuids:
             execute_query(friend_query, [room_id, friend_uuid, 0, 0])
@@ -38,10 +38,10 @@ async def create_room_service(room_data: RoomRequest):
         # 영수증 데이터 저장
         item_query = """
         INSERT INTO receiptItems (receiptId, itemName, numOfCheckedItems, details, price)
-        VALUES (%s, %s, %s, %s)
+        VALUES (%s, %s, %d, %s, %s)
         """
         for item in room_data.items:
-            execute_query(item_query, [receiptId, item.menu, 0, tem.details, item.price])
+            execute_query(item_query, [receiptId, item.menu, 0, item.details, item.price])
 
         return {
             "status": 201,
