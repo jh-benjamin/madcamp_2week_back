@@ -120,7 +120,7 @@ async def analyze_receipt(file: UploadFile = File(...)):
 
         JSON 출력 형식:
 
-        json{
+        {
         "items": [
             {
             "menu": "메뉴 이름",
@@ -159,26 +159,16 @@ async def analyze_receipt(file: UploadFile = File(...)):
         )
 
         response_dict = response.to_dict()
-        
-        print(response_dict["choices"][0])
-        print(response_dict["choices"][0]["message"])
 
         # OpenAI 응답에서 choices[0].message.content 추출
-        raw_content = response_dict["choices"][0]["message"]["content"]
-        
-        print(raw_content)
-
-        # content에서 JSON 부분만 추출
-        json_start_index = raw_content.find("```json")
-        json_data = raw_content[json_start_index:]
-        parsed_data = json.loads(json_data)
+        json_data = response_dict["choices"][0]["message"]["content"]
         
         print(json_data)
 
         return ResponseSchema(
             status=200,
             msg="영수증 분석 성공",
-            data=parsed_data
+            data=json_data
         )
 
     except Exception as e:
