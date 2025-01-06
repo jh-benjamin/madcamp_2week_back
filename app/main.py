@@ -7,6 +7,7 @@ import base64
 import os
 from PIL import Image
 import pytesseract
+import io  # io 모듈 추가
 
 app = FastAPI()
 
