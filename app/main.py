@@ -158,16 +158,20 @@ async def analyze_receipt(file: UploadFile = File(...)):
             ],
         )
 
+        response_dict = response.to_dict()
+        
+        print(response_dict)
+        print(response_dict["choices"])
+
         # OpenAI 응답에서 choices[0].message.content 추출
-        raw_content = response.choices[0].message["content"]  # 올바른 접근 방식
+        raw_content = response_dict["choices"][0]["message"]["content"]
         
         # content에서 JSON 부분만 추출
         json_start_index = raw_content.find("{")
         json_data = raw_content[json_start_index:]
+        parsed_data = json.loads(json_data)
         
         print(json_data)
-        
-        parsed_data = json.loads(json_data)
 
         return ResponseSchema(
             status=200,
