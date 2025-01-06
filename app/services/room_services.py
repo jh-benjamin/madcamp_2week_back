@@ -20,6 +20,8 @@ async def create_room_service(room_data: RoomRequest):
         """
         room_id = execute_query(room_query, [title, host_uuid, num_of_participants, created_at, status])
 
+        print(room_id)
+
         # 친구 UUID 저장
         friend_query = """
         INSERT INTO room_participants (roomId, userUuid)

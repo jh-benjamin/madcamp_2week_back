@@ -85,8 +85,10 @@ def execute_query(query: str, params: tuple = ()):
     cursor = connection.cursor()
 
     cursor.execute(query, params)
-    result = cursor.fetchall()
+    cursor.fetchall()
     
+    result = cursor.lastrowid
+
     cursor.close()
     connection.close()
     return result
