@@ -1,5 +1,4 @@
 from db.database import get_connection
-from typing import List, Dict
 
 def get_hosted_rooms_by_user_uuid(user_uuid: str):
     """

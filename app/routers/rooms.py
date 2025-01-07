@@ -21,8 +21,8 @@ async def get_user_rooms_by_status(user_uuid: str):
         # DB에서 사용자가 참여 중인 모든 방 가져오기
         participating_rooms = get_all_participating_rooms_by_user_uuid(user_uuid)
 
-        print(f"participating_rooms:{participating_rooms}")
-        
+        # print(f"participating_rooms:{participating_rooms}")
+
         # 방을 status에 따라 분류
         rooms_by_status = {"beforeSettlement": [], "afterSettlement": []}
         for room in participating_rooms:
@@ -31,7 +31,7 @@ async def get_user_rooms_by_status(user_uuid: str):
             elif room["status"] == 2:
                 rooms_by_status["afterSettlement"].append(room["title"])
 
-        print(f"rooms_by_status:{rooms_by_status}")
+        # print(f"rooms_by_status:{rooms_by_status}")
 
         return ResponseSchema(
             status=200,
@@ -139,18 +139,10 @@ async def find_friend_uuid(name: str):
         )
 
     except HTTPException as e:
-        return ResponseSchema(
-            status=500,
-            msg="사용자 검색 중 FastAPI 내부 오류",
-            data={"error": str(e)}
-        )
+        return e
 
     except Exception as e:
-        return ResponseSchema(
-            status=500,
-            msg="사용자 검색 중 서버 내부 오류",
-            data={"error": str(e)}
-        )
+        return e
 
 @router.post("/createRoom", response_model=ResponseSchema)
 async def create_room(room_data: RoomRequest):
@@ -160,6 +152,7 @@ async def create_room(room_data: RoomRequest):
     try:
         # 서비스 레이어 호출
         response = await create_room_service(room_data)
+        print(f"response:{response}")
         return response
 
     except HTTPException as e:
