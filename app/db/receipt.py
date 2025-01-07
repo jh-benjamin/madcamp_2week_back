@@ -62,7 +62,7 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
     item_check_counts = {}
 
     for check in checks:
-        user_uuid = check["userUuid"]
+        user_uuid = check["uuid"]
         item_name = check["itemName"]
         checked = check["checked"]
 
