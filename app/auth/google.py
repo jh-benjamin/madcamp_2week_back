@@ -1,8 +1,25 @@
 import requests
 from fastapi import HTTPException
 import os
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 GOOGLE_KEY = os.getenv("GOOGLE_API_KEY")
+
+def verify_google_id_token(id_token_str: str):
+    try:
+        # 구글의 공개 키로 ID 토큰 검증
+        user_info = id_token.verify_oauth2_token(
+            id_token_str,
+            requests.Request(),
+            "984252637303-4adk5dif0m1m2cah4esuofdf68cucvdq.apps.googleusercontent.com"  # OAuth 2.0 클라이언트 ID
+        )
+        
+        # 유효한 토큰이면 user_info 반환
+        return user_info
+    except ValueError:
+        # 유효하지 않은 토큰일 경우 예외 처리
+        raise HTTPException(status_code=401, detail="Invalid Google ID Token")
 
 # Google Identity Platform API 호출 함수
 def get_google_user_info(access_token: str):

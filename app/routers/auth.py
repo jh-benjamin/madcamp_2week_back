@@ -3,7 +3,7 @@ from schemas.response import ResponseSchema
 from auth.kakao import get_kakao_login_url, get_kakao_access_token, get_kakao_user_info
 from db.database import get_user_by_name, create_user, create_user_token
 from schemas.auth import UserRequest, UserResponse
-from auth.google import get_google_user_info
+from auth.google import verify_google_id_token
 
 router = APIRouter()
 
@@ -97,8 +97,10 @@ def google_login(request: UserRequest):
 
     try:
         # Step 1: Google People API로 사용자 정보 확인
-        google_user_info = get_google_user_info(token)
+        google_user_info = verify_google_id_token(token)
 
+        print(f"google_user_info:{google_user_info}")
+        
         if not google_user_info:
             raise HTTPException(status_code=400, detail="Google 사용자 정보를 가져올 수 없습니다.")
 
