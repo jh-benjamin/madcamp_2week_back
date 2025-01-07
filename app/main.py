@@ -17,7 +17,7 @@ async def analyze_receipt(file: UploadFile = File(...)):
     분석한 내용을 Json으로 반환합니다.
     """
     try:
-        data = analyze_receipt_logic(file)
+        data = await analyze_receipt_logic(file)
 
         return ResponseSchema(
             status=200,

@@ -127,7 +127,11 @@ def google_login(request: UserRequest):
         )
     except HTTPException as http_err:
         # FastAPI에서 발생한 HTTP 오류 처리
-        raise http_err
+        return ResponseSchema(
+            status=500,
+            msg="Google 로그인 중 FastAPI 오류 발생",
+            data={str(http_err)}
+        )
     except Exception as e:
         return ResponseSchema(
             status=500,

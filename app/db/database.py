@@ -25,16 +25,16 @@ def get_connection():
 def get_user_by_name(name: str):
     connection = get_connection()
     cursor = connection.cursor()
-    query = "SELECT * FROM users WHERE name = %s"
+    query = "SELECT uuid FROM users WHERE name = %s"
     cursor.execute(query, (name,))
-    user = cursor.fetchone()
+    uuid = cursor.fetchone()
     cursor.close()
     connection.close()
     # 사용자 없을 경우 None 반환
-    if not user:
+    if not uuid:
         return None
     
-    return user["uuid"]
+    return uuid
 
 # 새로운 사용자 생성
 def create_user(name: str):
