@@ -18,6 +18,34 @@ def get_connection():
         print(f"Error while connecting to MySQL: {e}")
         return None
 
+def get_item_check_counts(receipt_id: int):
+    """
+    receiptId를 기반으로 각 receiptItem에 대해 몇 명이나 체크했는지 반환
+    """
+    query = """
+        SELECT ri.id AS itemId, ri.itemName, COUNT(uc.userUuid) AS checkCount
+        FROM receiptItems ri
+        LEFT JOIN userItemChecks uc ON ri.id = uc.receiptItemId AND uc.checked = 1
+        WHERE ri.receiptId = %s
+        GROUP BY ri.id, ri.itemName
+    """
+    connection = get_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query, (receipt_id,))
+        items = cursor.fetchall()
+        cursor.close()
+        connection.close()
+
+        # 결과를 딕셔너리로 변환
+        return {item["itemName"]: item["checkCount"] for item in items}
+    
+    except Exception as e:
+        cursor.close()
+        connection.close()
+        print(f"Error fetching item check counts: {e}")
+        return None
+
 def get_receipt_items_by_receipt_id(receipt_id: int):
     query = """
         SELECT itemName, price
@@ -45,6 +73,12 @@ def calculate_user_totals(user_checks, item_check_counts, receipt_items):
     return user_totals
 
 def calculate_user_checks_and_item_counts(receipt_id: int):
+    """
+    receiptId를 기반으로 사용자별 체크 정보와 메뉴별 체크 인원수 반환
+    """
+    # 메뉴별 체크된 사용자 수 가져오기
+    item_check_counts = get_item_check_counts(receipt_id)
+
     query = """
         SELECT u.uuid, u.name, ri.itemName, ri.price, uc.checked
         FROM userItemChecks uc
@@ -60,29 +94,28 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
     connection.close()
 
     user_checks = {}
-    item_check_counts = {}
 
-    # item_check_counts 초기화
-    for check in checks:
-        item_name = check["itemName"]
-        if item_name not in item_check_counts:
-            item_check_counts[item_name] = 0
-
+    # 사용자 체크 데이터 생성
     for check in checks:
         user_uuid = check["uuid"]
         item_name = check["itemName"]
         item_price = check["price"]
         checked = check["checked"]
 
+        # 사용자별 체크 정보 초기화
         if user_uuid not in user_checks:
             user_checks[user_uuid] = {"name": check["name"], "items": []}
+
         if checked:
+            # n빵된 가격 계산
+            participants = item_check_counts.get(item_name, 1)  # 기본값 1
+            price_per_person = round(item_price / participants, 2)
+
             # 사용자별 체크 정보 추가
             user_checks[user_uuid]["items"].append({
                 "name": item_name,
-                "price": item_price  # 분배되지 않은 원래 가격 저장
+                "price": price_per_person  # n빵된 가격 저장
             })
-            item_check_counts[item_name] += 1
 
     return user_checks, item_check_counts
 
