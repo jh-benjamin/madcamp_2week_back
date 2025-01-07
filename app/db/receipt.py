@@ -64,13 +64,19 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
     for check in checks:
         user_uuid = check["uuid"]
         item_name = check["itemName"]
+        item_price = check["price"]
         checked = check["checked"]
 
+        # 사용자별 체크 정보에 가격 포함
         if user_uuid not in user_checks:
             user_checks[user_uuid] = {"name": check["name"], "items": []}
+
         if checked:
-            user_checks[user_uuid]["items"].append(item_name)
-            item_check_counts[item_name] = item_check_counts.get(item_name, 0) + 1
+            user_checks[user_uuid]["items"].append({
+                "name": item_name,
+                "price": round(item_price / (item_check_counts[item_name] + 1), 2)  # 1인당 분배된 가격 계산
+            })
+            item_check_counts[item_name] += 1  # 체크한 사용자 수 증가
 
     return user_checks, item_check_counts
 
