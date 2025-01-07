@@ -24,15 +24,18 @@ async def create_room_service(room_data: RoomRequest):
         cursor.execute(room_query, [title, host_uuid, num_of_participants, created_at, status])
         room_id = cursor.lastrowid
 
-        
 
         # 친구 UUID 저장
-        friend_query = """
+        participant_query = """
         INSERT INTO roomParticipants (roomId, userUuid, amountOfMoney, isPaid)
         VALUES (%s, %s, %s, %s)
         """
+
+        # 호스트 추가
+        cursor.execute(participant_query, [room_id, host_uuid, 0, 0])
+
         for friend_uuid in friend_uuids:
-            cursor.execute(friend_query, [room_id, friend_uuid, 0, 0])
+            cursor.execute(participant_query, [room_id, friend_uuid, 0, 0])
 
         recipt_query = """
         INSERT INTO receipts (roomId) VALUES (%s)
