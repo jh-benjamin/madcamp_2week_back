@@ -112,10 +112,10 @@ def google_login(request: UserRequest):
         # Step 2: 데이터베이스에서 사용자 확인
         uuid = get_user_by_name(name)
 
-        if not user:
+        if not uuid:
             # Step 3: 사용자가 존재하지 않을 경우 새 사용자 생성
-            user = create_user(name=name)
-            if not user:
+            uuid = create_user(name=name)
+            if not uuid:
                 raise HTTPException(status_code=500, detail="사용자 생성 중 오류가 발생했습니다.")
 
         # Step 4: 사용자 토큰 생성
@@ -143,7 +143,7 @@ def google_login(request: UserRequest):
         )
     except Exception as e:
         return ResponseSchema(
-            status=500,
+            status=400,
             msg="Google 로그인 중 오류 발생",
             data={str(e)}
         )
