@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from schemas.response import ResponseSchema
-from db.database import get_receipt_items_by_room_id, get_receipt_id_by_room_id
-from db.receipt import update_user_item_check, count_checked_users_by_receipt_item_id, get_users_in_receipt, get_receipt_items_by_receipt_id, get_receipt_items_by_receipt_id, get_receipt_items_by_receipt_id, calculate_user_totals, calculate_user_checks_and_item_counts
+from db.database import update_user_item_check, count_checked_users_by_receipt_item_id, get_receipt_items_by_room_id, get_receipt_id_by_room_id
+from db.receipt import get_users_in_receipt, get_receipt_items_by_receipt_id, calculate_user_totals, calculate_user_checks_and_item_counts
 from schemas.receipt import UpdateCheckRequest
 
 router = APIRouter()
