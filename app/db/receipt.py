@@ -36,9 +36,10 @@ def calculate_user_totals(user_checks, item_check_counts, receipt_items):
     user_totals = {}
     for user_uuid, data in user_checks.items():
         total = 0
-        for item_name in data["items"]:
+        for item in data["items"]:
+            item_name = item["name"]
             price = receipt_items[item_name]["price"]
-            participants = item_check_counts[item_name]
+            participants = item_check_counts.get(item_name, 1)  # 기본값 1
             total += price / participants
         user_totals[user_uuid] = {"name": data["name"], "total": round(total, 2)}
     return user_totals
@@ -67,16 +68,15 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
         item_price = check["price"]
         checked = check["checked"]
 
-        # 사용자별 체크 정보에 가격 포함
         if user_uuid not in user_checks:
             user_checks[user_uuid] = {"name": check["name"], "items": []}
-
         if checked:
+            # 사용자별 체크 정보 추가
             user_checks[user_uuid]["items"].append({
                 "name": item_name,
-                "price": round(item_price / (item_check_counts[item_name] + 1), 2)  # 1인당 분배된 가격 계산
+                "price": item_price  # 분배되지 않은 원래 가격 저장
             })
-            item_check_counts[item_name] += 1  # 체크한 사용자 수 증가
+            item_check_counts[check["itemId"]] += 1
 
     return user_checks, item_check_counts
 
