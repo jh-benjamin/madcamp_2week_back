@@ -76,7 +76,7 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
                 "name": item_name,
                 "price": item_price  # 분배되지 않은 원래 가격 저장
             })
-            item_check_counts[check["itemId"]] += 1
+            item_check_counts[item_name] += 1
 
     return user_checks, item_check_counts
 
