@@ -8,8 +8,11 @@ from auth.google import get_google_user_info
 router = APIRouter()
 
 # 1. 카카오 로그인 제공
-@router.get("/auth/kakao/login-url", response_model=ResponseSchema)
+@router.get("/kakao/login-url", response_model=ResponseSchema)
 def kakao_login_url():
+    """
+    카카오 로그인 링크를 넘겨줍니다. (테스트용)
+    """
     login_url = get_kakao_login_url()
     return ResponseSchema(
                 status=200,
@@ -19,7 +22,7 @@ def kakao_login_url():
                 }
             )
 
-@router.get("/auth/kakao/callback", response_model=ResponseSchema)
+@router.get("/kakao/callback", response_model=ResponseSchema)
 def kakao_callback(code: str):
     """
     안드로이드 앱이 인가 코드를 서버로 전달하면,
@@ -84,8 +87,12 @@ def kakao_callback(code: str):
         )
 
 # FastAPI 엔드포인트
-@router.post("/auth/google", response_model=ResponseSchema)
+@router.post("/google", response_model=ResponseSchema)
 def google_login(request: UserRequest):
+    """
+    구글 로그인을 진행합니다.
+    토큰 오류거나 api 오류일 가능성이 있습니다. (미완)
+    """
     token = request.token
 
     try:
