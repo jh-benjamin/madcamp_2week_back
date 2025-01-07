@@ -25,7 +25,7 @@ def get_receipt_items_by_receipt_id(receipt_id: int):
         WHERE receiptId = %s
     """
     connection = get_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = connection.cursor()
     cursor.execute(query, (receipt_id,))
     items = cursor.fetchall()
     cursor.close()
@@ -52,7 +52,7 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
         WHERE ri.receiptId = %s
     """
     connection = get_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = connection.cursor()
     cursor.execute(query, (receipt_id,))
     checks = cursor.fetchall()
     cursor.close()
@@ -83,7 +83,7 @@ def get_users_in_receipt(receipt_id: int):
         WHERE r.id = %s
     """
     connection = get_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = connection.cursor()
     cursor.execute(query, (receipt_id,))
     users = cursor.fetchall()
     cursor.close()
