@@ -34,12 +34,20 @@ async def get_receipt_summary(receipt_id: int):
         # Step 1: Receipt에 참여한 사용자 정보 가져오기
         participants = get_users_in_receipt(receipt_id)
         if not participants:
-            raise HTTPException(status_code=404, detail="해당 receiptId에 참여한 사용자가 없습니다.")
+            return ResponseSchema(
+                    status=404,
+                    msg="해당 receiptId에 참여한 사용자가 없습니다.",
+                    data=None
+                )
 
         # Step 2: ReceiptItems 데이터 가져오기
         receipt_items = get_receipt_items_by_receipt_id(receipt_id)
         if not receipt_items:
-            raise HTTPException(status_code=404, detail="해당 receiptId에 대한 receiptItems가 없습니다.")
+            return ResponseSchema(
+                    status=404,
+                    msg="해당 receiptId에 대한 receiptItems가 없습니다.",
+                    data=None
+                )
 
         # Step 3: 사용자별 체크 상태 및 메뉴별 체크 인원 계산
         user_checks, item_check_counts = calculate_user_checks_and_item_counts(receipt_id)
