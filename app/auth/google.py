@@ -24,4 +24,5 @@ def get_google_user_info(access_token: str):
 
         return name
     else:
+        print(response)
         raise HTTPException(status_code=401, detail="Invalid Google access token")
