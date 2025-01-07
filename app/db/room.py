@@ -37,7 +37,7 @@ def get_participating_rooms_by_user_uuid(user_uuid: str):
 
     return temp
 
-def get_all_participating_rooms_by_user_uuid(user_uuid: str) -> List[Dict]:
+def get_all_participating_rooms_by_user_uuid(user_uuid: str):
     """
     사용자의 UUID를 기반으로, 사용자가 참여 중인 모든 방을 가져오는 함수.
     """

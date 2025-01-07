@@ -21,6 +21,8 @@ async def get_user_rooms_by_status(user_uuid: str):
         # DB에서 사용자가 참여 중인 모든 방 가져오기
         participating_rooms = get_all_participating_rooms_by_user_uuid(user_uuid)
 
+        print(f"participating_rooms:{participating_rooms}")
+        
         # 방을 status에 따라 분류
         rooms_by_status = {"beforeSettlement": [], "afterSettlement": []}
         for room in participating_rooms:
@@ -28,6 +30,8 @@ async def get_user_rooms_by_status(user_uuid: str):
                 rooms_by_status["beforeSettlement"].append(room["title"])
             elif room["status"] == 2:
                 rooms_by_status["afterSettlement"].append(room["title"])
+
+        print(f"rooms_by_status:{rooms_by_status}")
 
         return ResponseSchema(
             status=200,
