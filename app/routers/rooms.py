@@ -4,7 +4,7 @@ from typing import List
 from services.room_services import create_room_service
 from schemas.rooms import RoomRequest, Item
 from schemas.response import ResponseSchema
-from db.database import get_user_by_name
+from db.database import get_user_by_name, get_rooms_by_user_uuid
 
 # 라우터 초기화
 router = APIRouter()

@@ -3,7 +3,6 @@ from schemas.response import ResponseSchema
 from services.receipt_service import analyze_receipt_logic
 from routers.auth import router as auth_router  # auth 라우터 가져오기
 from routers.rooms import router as room_router  # room 라우터
-from db.database import get_user_by_name
 
 app = FastAPI()
 
