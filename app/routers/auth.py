@@ -99,7 +99,7 @@ def google_login(request: UserRequest):
         # Step 1: Google People API로 사용자 정보 확인
         google_user_info = verify_google_id_token(token)
 
-        print(f"google_user_info:{google_user_info}")
+        # print(f"google_user_info:{google_user_info}")
         
         if not google_user_info:
             raise HTTPException(status_code=400, detail="Google 사용자 정보를 가져올 수 없습니다.")

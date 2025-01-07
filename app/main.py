@@ -15,6 +15,10 @@ app.include_router(room_router, prefix="/rooms", tags=["Rooms"])
 app.include_router(receipt_router, prefix="/receipt", tags=["Receipt"])
 app.include_router(notificaiton_router, prefix="/notification", tags=["Notification"])
 
+@app.get("/")
+def hi():
+    return "HI"
+
 @app.get("/findUuid/{name}", response_model=ResponseSchema)
 async def find_uuid(name: str):
     """

@@ -19,7 +19,11 @@ async def find_room_id(user_uuid: str):
         room_ids = get_rooms_by_user_uuid(user_uuid)
 
         if not room_ids:
-            raise HTTPException(status_code=404, detail="사용자가 속한 방이 없습니다.")
+            return ResponseSchema(
+                status=404,
+                msg="사용자가 속한 방이 없습니다.",
+                data=None
+            )
 
         return ResponseSchema(
             status=200,
