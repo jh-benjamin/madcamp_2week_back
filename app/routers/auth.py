@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from schemas.response import ResponseSchema
 from auth.kakao import get_kakao_login_url, get_kakao_access_token, get_kakao_user_info
 from db.database import get_user_by_name, create_user, create_user_token
-from schemas.auth import UserRequest, UserResponse
+from schemas.auth import UserRequest
 from auth.google import verify_google_id_token
 
 router = APIRouter()
@@ -108,7 +108,8 @@ def google_login(request: UserRequest):
 
         if not name:
             raise HTTPException(status_code=400, detail="Google 사용자 정보에 name이 없습니다.")
-
+        
+        print(f"name: {name}")
         # Step 2: 데이터베이스에서 사용자 확인
         uuid = get_user_by_name(name)
 
@@ -118,6 +119,8 @@ def google_login(request: UserRequest):
             if not uuid:
                 raise HTTPException(status_code=500, detail="사용자 생성 중 오류가 발생했습니다.")
 
+
+        print(f"uuid:{uuid}")
         # Step 4: 사용자 토큰 생성
         token = create_user_token(uuid)
         if not token:
