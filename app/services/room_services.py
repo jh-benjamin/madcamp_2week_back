@@ -66,6 +66,7 @@ async def create_room_service(room_data: RoomRequest):
             "msg": "방이 성공적으로 생성되었습니다.",
             "data": {
                 "roomId": room_id,
+                "receiptId": receiptId,
                 "title": title,
                 "hostUuid": host_uuid,
                 "friendUuids": friend_uuids,

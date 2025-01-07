@@ -30,8 +30,8 @@ async def get_receipt_summary(receipt_id: int):
 
         # Step 5: 아무도 체크하지 않은 메뉴 확인
         unchecked_items = [
-            item for item_id, count in item_check_counts.items()
-            if count == 0 and (item := receipt_items.get(item_id))
+            item for item_id, item in receipt_items.items()
+            if item_check_counts.get(item_id, 0) == 0
         ]
 
         # 데이터 반환
