@@ -114,12 +114,12 @@ def google_login(request: UserRequest):
 
         if not uuid:
             # Step 3: 사용자가 존재하지 않을 경우 새 사용자 생성
-            uuid = create_user(name=name)
+            uuid = create_user(name)
             if not uuid:
                 raise HTTPException(status_code=500, detail="사용자 생성 중 오류가 발생했습니다.")
 
         # Step 4: 사용자 토큰 생성
-        token = create_user_token(user_id=uuid)
+        token = create_user_token(uuid)
         if not token:
             raise HTTPException(status_code=500, detail="사용자 토큰 생성 중 오류가 발생했습니다.")
 
