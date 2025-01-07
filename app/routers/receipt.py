@@ -95,7 +95,11 @@ async def get_receipt_id(room_id: int):
         receipt_id = get_receipt_id_by_room_id(room_id)
 
         if not receipt_id:
-            raise HTTPException(status_code=404, detail="해당 roomId에 대한 receiptId가 없습니다.")
+            return ResponseSchema(
+                status=404,
+                msg="해당 roomId에 대한 receiptId가 없습니다",
+                data=None
+            )
 
         return ResponseSchema(
             status=200,
