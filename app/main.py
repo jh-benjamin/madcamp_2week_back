@@ -4,6 +4,7 @@ from services.receipt_service import analyze_receipt_logic
 from routers.auth import router as auth_router  # auth 라우터 가져오기
 from routers.rooms import router as room_router  # room 라우터
 from routers.receipt import router as receipt_router  # room 라우터
+from routers.notification import router as notificaiton_router
 from db.database import get_user_by_name
 
 app = FastAPI()
@@ -11,7 +12,8 @@ app = FastAPI()
 # 라우터 등록
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(room_router, prefix="/rooms", tags=["Rooms"])
-app.include_router(receipt_router, prefix="/receipt", tags=["receipt"])
+app.include_router(receipt_router, prefix="/receipt", tags=["Receipt"])
+app.include_router(notificaiton_router, prefix="/notification", tags=["Notification"])
 
 @app.get("/findUuid/{name}", response_model=ResponseSchema)
 async def find_uuid(name: str):

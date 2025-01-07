@@ -1,10 +1,29 @@
 from fastapi import APIRouter, HTTPException
 from schemas.response import ResponseSchema
 from db.database import update_user_item_check, count_checked_users_by_receipt_item_id, get_receipt_items_by_room_id, get_receipt_id_by_room_id
-from db.receipt import get_users_in_receipt, get_receipt_items_by_receipt_id, calculate_user_totals, calculate_user_checks_and_item_counts
+from db.receipt import get_users_in_receipt, get_receipt_items_by_receipt_id, calculate_user_totals, calculate_user_checks_and_item_counts, update_is_paid
 from schemas.receipt import UpdateCheckRequest
 
 router = APIRouter()
+
+@router.post("/updateIsPaid", response_model=ResponseSchema)
+async def update_is_paid_endpoint(room_id: int, user_uuid: str, is_paid: int):
+    """
+    roomId와 userUuid를 기반으로 isPaid 값을 업데이트하는 API
+    """
+    result = update_is_paid(room_id, user_uuid, is_paid)
+    if result["status"] == "success":
+        return ResponseSchema(
+            status=200,
+            msg=result["msg"],
+            data=None
+        )
+    else:
+        return ResponseSchema(
+            status=500,
+            msg=result["msg"],
+            data={"error": result["error"]}
+        )
 
 @router.get("/getReceiptSummary/{receipt_id}", response_model=ResponseSchema)
 async def get_receipt_summary(receipt_id: int):

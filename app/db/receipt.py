@@ -18,6 +18,30 @@ def get_connection():
         print(f"Error while connecting to MySQL: {e}")
         return None
 
+def update_is_paid(room_id: int, user_uuid: str, is_paid: int):
+    """
+    roomId와 userUuid를 기반으로 roomParticipants의 isPaid 값을 업데이트
+    """
+    query = """
+        UPDATE roomParticipants
+        SET isPaid = %s
+        WHERE roomId = %s AND userUuid = %s
+    """
+    connection = get_connection()
+    cursor = connection.cursor()
+    try:
+        # 업데이트 실행
+        cursor.execute(query, (is_paid, room_id, user_uuid))
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return {"status": "success", "msg": f"roomId {room_id}, userUuid {user_uuid}의 isPaid 값을 {is_paid}로 업데이트했습니다."}
+    except Exception as e:
+        cursor.close()
+        connection.close()
+        print(f"Error updating isPaid: {e}")
+        return {"status": "error", "msg": "isPaid 값을 업데이트하는 중 오류가 발생했습니다.", "error": str(e)}
+
 def get_item_check_counts(receipt_id: int):
     """
     receiptId를 기반으로 각 receiptItem에 대해 몇 명이나 체크했는지 반환
