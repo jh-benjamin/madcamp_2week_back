@@ -168,7 +168,7 @@ async def get_receipt_items(room_id: int):
         receipt_items = get_receipt_items_by_room_id(room_id)
 
         if not receipt_items:
-            ResponseSchema(
+            return ResponseSchema(
                 status=404,
                 msg="해당 방에 대한 receiptItems가 없습니다.",
                 data=None
