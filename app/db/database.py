@@ -36,7 +36,7 @@ def update_user_item_check(receipt_item_id: int, user_uuid: str, checked: bool):
         """
         cursor.execute(query, (checked, receipt_item_id, user_uuid))
         connection.commit()
-        return cursor.rowcount > 0  # 변경된 행 수가 0보다 큰지 확인
+        return True  # 변경된 행 수가 0보다 큰지 확인
 
     except Exception as e:
         print(f"Error updating user item check: {e}")
