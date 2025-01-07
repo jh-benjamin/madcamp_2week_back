@@ -13,7 +13,7 @@ app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(room_router, prefix="/rooms", tags=["Rooms"])
 app.include_router(receipt_router, prefix="/receipt", tags=["receipt"])
 
-@app.get("/findUuid", response_model=ResponseSchema)
+@app.get("/findUuid/{name}", response_model=ResponseSchema)
 async def find_uuid(name: str):
     """
     특정 이름을 가진 사용자의 UUID 반환 API

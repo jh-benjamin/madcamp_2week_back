@@ -6,7 +6,7 @@ from schemas.receipt import UpdateCheckRequest
 
 router = APIRouter()
 
-@router.get("/getReceiptSummary", response_model=ResponseSchema)
+@router.get("/getReceiptSummary/{receipt_id}", response_model=ResponseSchema)
 async def get_receipt_summary(receipt_id: int):
     """
     receiptId를 기반으로 사용자별 메뉴 체크 상태와 금액 계산 결과 반환
@@ -58,7 +58,7 @@ async def get_receipt_summary(receipt_id: int):
             data={"error": str(e)}
         )
 
-@router.get("/getReceiptId", response_model=ResponseSchema)
+@router.get("/getReceiptId/{room_id}", response_model=ResponseSchema)
 async def get_receipt_id(room_id: int):
     """
     roomId를 기반으로 receiptId를 반환
@@ -127,7 +127,7 @@ async def update_checks(request: UpdateCheckRequest):
 
 
 
-@router.get("/getReceiptItems", response_model=ResponseSchema)
+@router.get("/getReceiptItems/{room_id}", response_model=ResponseSchema)
 async def get_receipt_items(room_id: int):
     """
     주어진 방 ID를 기반으로 receiptItems 데이터를 반환

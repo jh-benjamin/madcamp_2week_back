@@ -9,7 +9,7 @@ from db.database import get_user_by_name, get_rooms_by_user_uuid
 # 라우터 초기화
 router = APIRouter()
 
-@router.get("/findRoomId", response_model=ResponseSchema)
+@router.get("/findRoomId/{user_uuid}", response_model=ResponseSchema)
 async def find_room_id(user_uuid: str):
     """
     특정 사용자가 속해 있는 방의 ID 리스트 반환 API
@@ -37,7 +37,7 @@ async def find_room_id(user_uuid: str):
             data={"error": str(e)}
         )
 
-@router.get("/findUuid", response_model=ResponseSchema)
+@router.get("/findUuid/{name}", response_model=ResponseSchema)
 async def find_friend_uuid(name: str):
     """
     특정 이름을 가진 사용자의 UUID 반환 API
