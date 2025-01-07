@@ -109,7 +109,6 @@ def google_login(request: UserRequest):
         if not name:
             raise HTTPException(status_code=400, detail="Google 사용자 정보에 name이 없습니다.")
         
-        print(f"name: {name}")
         # Step 2: 데이터베이스에서 사용자 확인
         uuid = get_user_by_name(name)
 
@@ -119,12 +118,15 @@ def google_login(request: UserRequest):
             if not uuid:
                 raise HTTPException(status_code=500, detail="사용자 생성 중 오류가 발생했습니다.")
 
-
-        print(f"uuid:{uuid}")
-        # Step 4: 사용자 토큰 생성
-        token = create_user_token(uuid)
-        if not token:
-            raise HTTPException(status_code=500, detail="사용자 토큰 생성 중 오류가 발생했습니다.")
+            # Step 4: 사용자 토큰 생성
+            token = create_user_token(uuid)
+            if not token:
+                raise HTTPException(status_code=500, detail="사용자 토큰 생성 중 오류가 발생했습니다.")
+        else:
+            # Step 4: 사용자 토큰 생성
+            token = create_user_token(uuid['uuid'])
+            if not token:
+                raise HTTPException(status_code=500, detail="사용자 토큰 생성 중 오류가 발생했습니다.")
 
         return ResponseSchema(
             status=200,
