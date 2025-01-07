@@ -47,9 +47,17 @@ async def create_room_service(room_data: RoomRequest):
         INSERT INTO receiptItems (receiptId, itemName, numOfCheckedItems, details, price)
         VALUES (%s, %s, %s, %s, %s)
         """
+        user_item_checks_query = """
+        INSERT INTO userItemChecks (receiptItemId, userUuid, checked)
+        VALUES (%s, %s, %s)
+        """
         for item in room_data.items:
             cursor.execute(item_query, [receiptId, item.menu, 0, item.details, item.price])
+            receipt_item_id = cursor.lastrowid  # 방금 추가된 receiptItem의 ID 가져오기
 
+            # userItemChecks에 각 사용자 추가
+            for user_uuid in [host_uuid] + friend_uuids:  # 호스트와 친구들 포함
+                cursor.execute(user_item_checks_query, [receipt_item_id, user_uuid, False])
         # 트랜잭션 커밋
         connection.commit()
 

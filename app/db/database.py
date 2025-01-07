@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import uuid
 import secrets
 import hashlib
-        
+    
 # DB 연결 설정
 def get_connection():
     try:
@@ -21,6 +21,71 @@ def get_connection():
         print(f"Error while connecting to MySQL: {e}")
         return None
     
+def update_user_item_check(receipt_item_id: int, user_uuid: str, checked: bool):
+    """
+    userItemChecks 테이블의 checked 상태 업데이트
+    """
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    try:
+        query = """
+            UPDATE userItemChecks
+            SET checked = %s
+            WHERE receiptItemId = %s AND userUuid = %s
+        """
+        cursor.execute(query, (checked, receipt_item_id, user_uuid))
+        connection.commit()
+        return cursor.rowcount > 0  # 변경된 행 수가 0보다 큰지 확인
+
+    except Exception as e:
+        print(f"Error updating user item check: {e}")
+        return False
+
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def count_checked_users_by_receipt_item_id(receipt_item_id: int):
+    """
+    receiptItemId 별로 체크된 사용자 수를 반환하고,
+    receiptItems 테이블의 numOfCheckedItems를 업데이트
+    """
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    try:
+        count_query = """
+            SELECT COUNT(*) AS check_count
+            FROM userItemChecks
+            WHERE receiptItemId = %s AND checked = TRUE
+        """
+        cursor.execute(count_query, (receipt_item_id,))
+        result = cursor.fetchone()
+
+        check_count = result["check_count"] if result else 0
+        
+        # receiptItems 테이블의 numOfCheckedItems 업데이트
+        update_query = """
+            UPDATE receiptItems
+            SET numOfCheckedItems = %s
+            WHERE id = %s
+        """
+        cursor.execute(update_query, (check_count, receipt_item_id))
+        connection.commit()
+
+        return check_count
+
+    except Exception as e:
+        print(f"Error counting checked users for receiptItemId {receipt_item_id}: {e}")
+        return 0
+
+    finally:
+        cursor.close()
+        connection.close()
+
+
 def get_receipt_items_by_room_id(room_id: int):
     """
     방 ID를 기반으로 receipts와 receiptItems 데이터를 조회
