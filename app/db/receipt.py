@@ -45,7 +45,7 @@ def calculate_user_totals(user_checks, item_check_counts, receipt_items):
 
 def calculate_user_checks_and_item_counts(receipt_id: int):
     query = """
-        SELECT u.userUuid, u.name, ri.itemName, uc.checked
+        SELECT u.uuid, u.name, ri.itemName, uc.checked
         FROM userItemChecks uc
         JOIN users u ON uc.userUuid = u.uuid
         JOIN receiptItems ri ON uc.receiptItemId = ri.id
