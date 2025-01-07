@@ -38,7 +38,7 @@ async def find_room_id(user_uuid: str):
         )
 
 @router.get("/findUuid", response_model=ResponseSchema)
-async def find_friend(name: str):
+async def find_friend_uuid(name: str):
     """
     특정 이름을 가진 사용자의 UUID 반환 API
     """
