@@ -21,7 +21,7 @@ def get_connection():
         print(f"Error while connecting to MySQL: {e}")
         return None
     
-def update_user_item_check(receipt_item_id: int, user_uuid: str, checked: bool):
+def update_user_item_check(receipt_item_id: int, user_uuid: str, checked: int):
     """
     userItemChecks 테이블의 checked 상태 업데이트
     """
@@ -34,8 +34,10 @@ def update_user_item_check(receipt_item_id: int, user_uuid: str, checked: bool):
             SET checked = %s
             WHERE receiptItemId = %s AND userUuid = %s
         """
-        cursor.execute(query, (checked, receipt_item_id, user_uuid))
+        print(f"Updating userItemChecks with receipt_item_id={receipt_item_id}, user_uuid={user_uuid}, checked={checked}")
+        res = cursor.execute(query, (checked, receipt_item_id, user_uuid))
         connection.commit()
+        print(res)
         return True  # 변경된 행 수가 0보다 큰지 확인
 
     except Exception as e:
@@ -63,7 +65,7 @@ def count_checked_users_by_receipt_item_id(receipt_item_id: int):
         """
         cursor.execute(count_query, (receipt_item_id,))
         result = cursor.fetchone()
-
+        print(f"Result from count_query: {result}")
         check_count = result["check_count"] if result else 0
         
         # receiptItems 테이블의 numOfCheckedItems 업데이트
