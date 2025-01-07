@@ -30,7 +30,11 @@ def get_user_by_name(name: str):
     user = cursor.fetchone()
     cursor.close()
     connection.close()
-    return user
+    # 사용자 없을 경우 None 반환
+    if not user:
+        return None
+    
+    return user["uuid"]
 
 # 새로운 사용자 생성
 def create_user(name: str):

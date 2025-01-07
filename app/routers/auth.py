@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from schemas.response import ResponseSchema
 from auth.kakao import get_kakao_login_url, get_kakao_access_token, get_kakao_user_info
 from db.database import get_user_by_name, create_user, create_user_token
+from schemas.auth import UserRequest, UserResponse
+from auth.google import get_google_user_info
 
 router = APIRouter()
 
@@ -79,4 +81,56 @@ def kakao_callback(code: str):
             status=500,
             msg="카카오 인증 중 서버 내부 오류",
             data={"error": str(e)}
+        )
+
+# FastAPI 엔드포인트
+@router.post("/auth/google", response_model=ResponseSchema)
+def google_login(request: UserRequest):
+    token = request.token
+
+    try:
+        # Step 1: Google People API로 사용자 정보 확인
+        google_user_info = get_google_user_info(token)
+
+        if not google_user_info:
+            raise HTTPException(status_code=400, detail="Google 사용자 정보를 가져올 수 없습니다.")
+
+        name = google_user_info.get("name")
+
+        if not name:
+            raise HTTPException(status_code=400, detail="Google 사용자 정보에 name이 없습니다.")
+
+        # Step 2: 데이터베이스에서 사용자 확인
+        uuid = get_user_by_name(name)
+
+        if not user:
+            # Step 3: 사용자가 존재하지 않을 경우 새 사용자 생성
+            user = create_user(name=name)
+            if not user:
+                raise HTTPException(status_code=500, detail="사용자 생성 중 오류가 발생했습니다.")
+
+        # Step 4: 사용자 토큰 생성
+        token = create_user_token(user_id=uuid)
+        if not token:
+            raise HTTPException(status_code=500, detail="사용자 토큰 생성 중 오류가 발생했습니다.")
+
+        return ResponseSchema(
+            status=200,
+            msg="Google 로그인 성공",
+            data={
+                "user": {
+                    "id": uuid,
+                    "name": name,
+                },
+                "token": token
+            }
+        )
+    except HTTPException as http_err:
+        # FastAPI에서 발생한 HTTP 오류 처리
+        raise http_err
+    except Exception as e:
+        return ResponseSchema(
+            status=500,
+            msg="Google 로그인 중 오류 발생",
+            data={str(e)}
         )
