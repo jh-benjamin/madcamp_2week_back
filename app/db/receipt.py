@@ -62,6 +62,12 @@ def calculate_user_checks_and_item_counts(receipt_id: int):
     user_checks = {}
     item_check_counts = {}
 
+    # item_check_counts 초기화
+    for check in checks:
+        item_name = check["itemName"]
+        if item_name not in item_check_counts:
+            item_check_counts[item_name] = 0
+
     for check in checks:
         user_uuid = check["uuid"]
         item_name = check["itemName"]
