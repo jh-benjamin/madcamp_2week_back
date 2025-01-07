@@ -58,13 +58,7 @@ def get_all_participating_rooms_by_user_uuid(user_uuid: str):
         # 결과 가져오기
         result = cursor.fetchall()
 
-        # 결과를 리스트로 정리
-        rooms = [
-            {"room_id": row[0], "title": row[1], "status": row[2]}
-            for row in result
-        ]
-
-        return rooms
+        return result
 
     except Exception as e:
         raise Exception(f"DB에서 참여 중인 방을 가져오는 중 오류 발생: {e}")
