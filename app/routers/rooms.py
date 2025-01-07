@@ -5,10 +5,49 @@ from services.room_services import create_room_service
 from schemas.rooms import RoomRequest, Item
 from schemas.response import ResponseSchema
 from db.database import get_user_by_name, get_rooms_by_user_uuid
-from db.room import get_hosted_rooms_by_user_uuid, get_participating_rooms_by_user_uuid
+from db.room import get_hosted_rooms_by_user_uuid, get_participating_rooms_by_user_uuid, get_all_participating_rooms_by_user_uuid
 
 # 라우터 초기화
 router = APIRouter()
+
+@router.get("/getRoomsByStatus/{user_uuid}", response_model=ResponseSchema)
+async def get_user_rooms_by_status(user_uuid: str):
+    """
+    주어진 user_uuid에 대해, 방을 status 값에 따라 정리해서 반환
+    status == 1: 정산 시작 전
+    status == 2: 정산 시작 후
+    """
+    try:
+        # DB에서 사용자가 참여 중인 모든 방 가져오기
+        participating_rooms = get_all_participating_rooms_by_user_uuid(user_uuid)
+
+        # 방을 status에 따라 분류
+        rooms_by_status = {"beforeSettlement": [], "afterSettlement": []}
+        for room in participating_rooms:
+            if room["status"] == 1:
+                rooms_by_status["beforeSettlement"].append(room["title"])
+            elif room["status"] == 2:
+                rooms_by_status["afterSettlement"].append(room["title"])
+
+        return ResponseSchema(
+            status=200,
+            msg="방 정보 검색 및 분류 성공",
+            data=rooms_by_status
+        )
+
+    except HTTPException as e:
+        return ResponseSchema(
+            status=500,
+            msg="방 정보 검색 중 서버 내부 오류",
+            data={"error": str(e)}
+        )
+
+    except Exception as e:
+        return ResponseSchema(
+            status=500,
+            msg="방 정보 검색 중 기타 오류",
+            data={"error": str(e)}
+        )
 
 @router.get("/getRooms/{user_uuid}", response_model=ResponseSchema)
 async def get_user_rooms(user_uuid: str):
@@ -120,7 +159,11 @@ async def create_room(room_data: RoomRequest):
         return response
 
     except HTTPException as e:
-        raise e
+        return ResponseSchema(
+            status=500,
+            msg="방 생성 중 FastAPI 오류",
+            data={"error": f"방 생성 중 오류 발생: {str(e)}"}
+        )
 
     except Exception as e:
         return ResponseSchema(
