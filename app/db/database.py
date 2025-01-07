@@ -1,4 +1,3 @@
-from mysql.connector import Error
 import pymysql
 from datetime import datetime, timedelta
 import uuid

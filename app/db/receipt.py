@@ -1,22 +1,4 @@
-import pymysql
-
-def get_connection():
-    """
-    데이터베이스 연결을 생성하는 함수
-    """
-    try:
-        connection = pymysql.connect(
-            host="localhost",
-            user="root",
-            password="p@ssword123",
-            database="paycheck",
-            charset="utf8mb4",          # UTF-8 지원
-            cursorclass=pymysql.cursors.DictCursor  # DictCursor로 설정
-        )
-        return connection
-    except pymysql.Error as e:
-        print(f"Error while connecting to MySQL: {e}")
-        return None
+from db.database import get_connection
 
 def update_is_paid(room_id: int, user_uuid: str, is_paid: int):
     """
