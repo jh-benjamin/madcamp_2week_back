@@ -1,0 +1,410 @@
+nohup: ignoring input
+INFO:     Will watch for changes in these directories: ['/home/benjamin/paycheck_project/madcamp_2week_back/app']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [53378] using StatReload
+INFO:     Started server process [53380]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     10.10.30.130:54616 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54618 - "GET /rooms/findUuid/%EC%9C%A0%EB%A5%98%E3%85%97%E3%84%B9 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'missing', 'loc': ('response', 'status'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'msg'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'data'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+
+INFO:     10.10.18.75:59609 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59609 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59610 - "GET /auth/kakao/login-url HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59610 - "GET /auth/kakao/login-url HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54620 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54620 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54622 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59612 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59612 - "GET /openapi.json HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 13, 'receiptId': 12, 'title': '도와주세요', 'hostUuid': '91155e20-e0c5-468d-af94-88005f238841', 'friendUuids': ['1111', '91155e20-e0c5-468d-af94-88005f238841'], 'numOfParticipants': 3, 'items': [], 'totalPrice': '0', 'createdAt': datetime.datetime(2025, 1, 7, 15, 6, 53, 409536), 'status': 1}}
+INFO:     10.10.30.130:54624 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59619 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59619 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59619 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59619 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59619 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59619 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59620 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.18.75:59620 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.18.79:61633 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.79:61633 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.18.79:61633 - "GET /receipt/getReceiptItems/2 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:61637 - "GET /receipt/getReceiptItems/3 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54634 - "GET /rooms/findUuid/%EA%B9%80%EC%88%98%ED%95%98%EC%9C%A0%EB%89%B4%EB%9F%AC%EB%85%B8%E3%85%A0%E3%85%87%EB%85%80%EC%A5%AC%E3%85%97%E3%85%87 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'missing', 'loc': ('response', 'status'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'msg'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'data'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+
+INFO:     10.10.30.130:54646 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54654 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C%EC%9C%A0%E3%85%93%EB%8D%94%EC%A0%80%EC%A3%BC%EC%A4%92 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'missing', 'loc': ('response', 'status'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'msg'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'data'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+
+INFO:     10.10.30.130:54656 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54656 - "GET /rooms/findUuid/tets HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/benjamin/paycheck_project/madcamp_2week_back/madcamp2_env/lib/python3.12/site-packages/fastapi/routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'missing', 'loc': ('response', 'status'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'msg'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+  {'type': 'missing', 'loc': ('response', 'data'), 'msg': 'Field required', 'input': HTTPException(status_code=404, detail='사용자를 찾을 수 없습니다.')}
+
+INFO:     10.10.30.130:54658 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54662 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54662 - "POST /rooms/createRoom HTTP/1.1" 422 Unprocessable Entity
+INFO:     10.10.30.130:54664 - "POST /rooms/createRoom HTTP/1.1" 422 Unprocessable Entity
+INFO:     10.10.30.130:54672 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54674 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54674 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54674 - "POST /rooms/createRoom HTTP/1.1" 422 Unprocessable Entity
+INFO:     10.10.18.79:62266 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.79:62294 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.79:62294 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.18.79:62306 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:62323 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 16, 'receiptId': 13, 'title': '저녁 회식 메뉴', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['1111', '2222', '3333'], 'numOfParticipants': 4, 'items': [Item(menu='삼겹살', details='구워서 제공되는 돼지고기', price='15000'), Item(menu='된장찌개', details='밥과 함께 제공되는 한국 전통 찌개', price='7000'), Item(menu='소주', details='한국 전통 주류', price='5000')], 'totalPrice': '27000', 'createdAt': datetime.datetime(2025, 1, 7, 16, 38, 52, 572574), 'status': 1}}
+INFO:     10.10.18.79:62350 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54692 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54694 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54694 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54696 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54698 - "POST /rooms/createRoom HTTP/1.1" 422 Unprocessable Entity
+INFO:     10.10.30.130:54740 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54742 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54742 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54744 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54746 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54748 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:62973 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.79:62979 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54762 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54764 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54766 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54768 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54770 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54778 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54780 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54782 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54786 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54788 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54790 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54792 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54794 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54796 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54802 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54804 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54806 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54808 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54810 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63196 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54814 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63272 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 32, 'receiptId': 29, 'title': '저녁 회식 메뉴', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['1111', '2222', '3333'], 'numOfParticipants': 4, 'items': [Item(menu='삼겹살', details='구워서 제공되는 돼지고기', price='15000'), Item(menu='된장찌개', details='밥과 함께 제공되는 한국 전통 찌개', price='7000'), Item(menu='소주', details='한국 전통 주류', price='5000')], 'totalPrice': '27000', 'createdAt': datetime.datetime(2025, 1, 7, 18, 17, 22, 967950), 'status': 1}}
+INFO:     10.10.18.79:63278 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 33, 'receiptId': 30, 'title': '저녁 회식 메뉴', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['1111', '2222', '3333'], 'numOfParticipants': 4, 'items': [Item(menu='삼겹살', details='구워서 제공되는 돼지고기', price='15000'), Item(menu='된장찌개', details='밥과 함께 제공되는 한국 전통 찌개', price='7000'), Item(menu='소주', details='한국 전통 주류', price='5000')], 'totalPrice': '27000원', 'createdAt': datetime.datetime(2025, 1, 7, 18, 17, 29, 624627), 'status': 1}}
+INFO:     10.10.18.79:63279 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63280 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63289 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54818 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54820 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54820 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54822 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 36, 'receiptId': 33, 'title': '살려주세요', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['91155e20-e0c5-468d-af94-88005f238841', '1111'], 'numOfParticipants': 3, 'items': [Item(menu='연태토닉하이볼캔500m', details='없음', price='27000'), Item(menu='해치하이볼오미자유자', details='없음', price='30000'), Item(menu='해치하이볼매실상강35', details='없음', price='30000'), Item(menu='재패니즈위스키하이볼', details='없음', price='13500'), Item(menu='미엘로하이볼캔500ml', details='없음', price='3500')], 'totalPrice': '12,950원', 'createdAt': datetime.datetime(2025, 1, 7, 18, 29, 30, 527835), 'status': 1}}
+INFO:     10.10.30.130:54822 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63446 - "GET /receipt/getReceiptItems/11 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63446 - "GET /receipt/getReceiptItems/10 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63448 - "GET /receipt/getReceiptItems/9 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63448 - "GET /receipt/getReceiptItems/1 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63448 - "GET /receipt/getReceiptItems/2 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63448 - "GET /receipt/getReceiptItems/3 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63450 - "GET /receipt/getReceiptItems/4 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63450 - "GET /receipt/getReceiptItems/5 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63450 - "GET /receipt/getReceiptItems/6 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63450 - "GET /receipt/getReceiptItems/6 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63451 - "GET /receipt/getReceiptItems/7 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63451 - "GET /receipt/getReceiptItems/7 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63451 - "GET /receipt/getReceiptItems/8 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63451 - "GET /receipt/getReceiptItems/9 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63451 - "GET /receipt/getReceiptItems/10 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63452 - "GET /receipt/getReceiptItems/11 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63452 - "GET /receipt/getReceiptItems/12 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63453 - "GET /receipt/getReceiptItems/13 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63453 - "GET /receipt/getReceiptItems/14 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63453 - "GET /receipt/getReceiptItems/15 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54854 - "GET /rooms/findUuid/test1 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54856 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 37, 'receiptId': 34, 'title': '왜 안되냐', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['1111'], 'numOfParticipants': 2, 'items': [Item(menu='농심)신라면', details='없음', price='1800'), Item(menu='대파', details='없음', price='500'), Item(menu='청양고추', details='없음', price='800'), Item(menu='비비고)만두', details='없음', price='3000'), Item(menu='국산)김치', details='없음', price='5900'), Item(menu='칠갑)떡국떡', details='없음', price='2500')], 'totalPrice': '14,500원', 'createdAt': datetime.datetime(2025, 1, 7, 18, 35, 43, 485305), 'status': 1}}
+INFO:     10.10.30.130:54856 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63482 - "GET /receipt/getReceiptItems/37 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63483 - "GET /receipt/getReceiptItems/36 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63483 - "GET /receipt/getReceiptItems/35 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:63483 - "GET /receipt/getReceiptItems/36 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54864 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54872 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54872 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 38, 'receiptId': 35, 'title': '잠온다', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['91155e20-e0c5-468d-af94-88005f238841'], 'numOfParticipants': 2, 'items': [Item(menu='연태토닉하이볼캔500m', details='6', price='27000'), Item(menu='해치하이볼오미자유자', details='6', price='30000'), Item(menu='해치하이볼매실상강35', details='6', price='30000'), Item(menu='재패니즈위스키하이볼', details='3', price='13500'), Item(menu='미어로하이볼캔500ml', details='1', price='3500')], 'totalPrice': '12,950원', 'createdAt': datetime.datetime(2025, 1, 7, 19, 3, 26, 136426), 'status': 1}}
+INFO:     10.10.30.130:54872 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54872 - "GET /receipt/getReceiptItems/38 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54962 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54964 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54966 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 39, 'receiptId': 36, 'title': '자고싶다', 'hostUuid': '91155e20-e0c5-468d-af94-88005f238841', 'friendUuids': ['91155e20-e0c5-468d-af94-88005f238841'], 'numOfParticipants': 2, 'items': [Item(menu='농심)신라면', details='없음', price='1800'), Item(menu='대파', details='없음', price='500'), Item(menu='청양고추', details='없음', price='800'), Item(menu='비비고)만두', details='없음', price='3000'), Item(menu='국산)김치', details='없음', price='5900'), Item(menu='칠감)떡국떡', details='없음', price='2500')], 'totalPrice': '14,500원', 'createdAt': datetime.datetime(2025, 1, 7, 19, 35, 14, 204167), 'status': 1}}
+INFO:     10.10.30.130:54966 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54966 - "GET /receipt/getReceiptItems/39 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54982 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54992 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54992 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 40, 'receiptId': 37, 'title': '잠와', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['91155e20-e0c5-468d-af94-88005f238841'], 'numOfParticipants': 2, 'items': [Item(menu='농심)신라면', details='없음', price='1800'), Item(menu='대파', details='없음', price='500'), Item(menu='청양고추', details='없음', price='800'), Item(menu='비비고)만두', details='없음', price='3000'), Item(menu='국산)김치', details='없음', price='5900'), Item(menu='칠감)떡국떡', details='없음', price='2500')], 'totalPrice': '14,500원', 'createdAt': datetime.datetime(2025, 1, 7, 19, 42, 38, 692589), 'status': 1}}
+INFO:     10.10.30.130:54994 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:54994 - "GET /receipt/getReceiptItems/40 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64318 - "GET /rooms/findRoomId/1111 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64481 - "GET /rooms/getRooms/1111 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55018 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55018 - "GET /rooms/getRooms/62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64591 - "GET /rooms/getRooms/62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55026 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55026 - "GET /rooms/getRooms/91155e20-e0c5-468d-af94-88005f238841 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55028 - "GET /rooms/getRooms/91155e20-e0c5-468d-af94-88005f238841 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64641 - "GET /rooms/findRoomId/1111 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64824 - "GET /rooms/findRoomId/62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64851 - "GET /receipt/getReceiptId/39 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:64855 - "GET /receipt/getReceiptItems/36 HTTP/1.1" 200 OK
+INFO:     10.10.18.79:65046 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.79:65046 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55066 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55066 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55068 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55070 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 41, 'receiptId': 38, 'title': '사람살려', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['91155e20-e0c5-468d-af94-88005f238841'], 'numOfParticipants': 2, 'items': [Item(menu='농심)신라면', details='2개', price='1800'), Item(menu='대파', details='없음', price='500'), Item(menu='청양고추', details='없음', price='800'), Item(menu='비비고)만두', details='없음', price='3000'), Item(menu='국산)김치', details='없음', price='5900'), Item(menu='칠갑)떡국떡', details='없음', price='2500')], 'totalPrice': '14,500원', 'createdAt': datetime.datetime(2025, 1, 7, 20, 57, 28, 294497), 'status': 1}}
+INFO:     10.10.30.130:55070 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55070 - "GET /receipt/getReceiptItems/41 HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55074 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55074 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55076 - "GET /rooms/findUuid/%EC%9D%B4%ED%98%84%EC%84%9C HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55078 - "POST /analyzeReceiptByGpt HTTP/1.1" 200 OK
+response:{'status': 201, 'msg': '방이 성공적으로 생성되었습니다.', 'data': {'roomId': 42, 'receiptId': 39, 'title': '하하', 'hostUuid': '62ab355f-a664-47aa-85a1-7a8cf82d68da', 'friendUuids': ['91155e20-e0c5-468d-af94-88005f238841'], 'numOfParticipants': 2, 'items': [Item(menu='연태 놀닉하이볼 캔 500m', details='없음', price='27000'), Item(menu='해치 하이볼 오미자유자', details='없음', price='30000'), Item(menu='해치 하이볼 매실상강 35', details='없음', price='30000'), Item(menu='재패니즈 위스키 하이볼', details='없음', price='13500'), Item(menu='미에로 하이볼 캔 500ml', details='없음', price='3500')], 'totalPrice': '12,950원', 'createdAt': datetime.datetime(2025, 1, 7, 21, 4, 25, 779245), 'status': 1}}
+INFO:     10.10.30.130:55078 - "POST /rooms/createRoom HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55078 - "GET /receipt/getReceiptItems/42 HTTP/1.1" 200 OK
+Updating userItemChecks with receipt_item_id=66, user_uuid=62ab355f-a664-47aa-85a1-7a8cf82d68da, checked=1
+1
+Result from count_query: {'check_count': 1}
+Updating userItemChecks with receipt_item_id=65, user_uuid=62ab355f-a664-47aa-85a1-7a8cf82d68da, checked=1
+1
+Result from count_query: {'check_count': 1}
+INFO:     10.10.30.130:55078 - "POST /receipt/updateChecks HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55080 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55080 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55084 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55084 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55084 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55084 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55086 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55084 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55084 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55084 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55086 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55088 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55090 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55090 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55096 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55098 - "GET /rooms/getRecentRoom?userUuid=62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 404 Not Found
+INFO:     10.10.30.130:55104 - "POST /auth/google HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55104 - "GET /rooms/findRoomId/62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55104 - "GET /receipt/getReceiptItems/42 HTTP/1.1" 200 OK
+Updating userItemChecks with receipt_item_id=65, user_uuid=62ab355f-a664-47aa-85a1-7a8cf82d68da, checked=1
+0
+Result from count_query: {'check_count': 1}
+Updating userItemChecks with receipt_item_id=66, user_uuid=62ab355f-a664-47aa-85a1-7a8cf82d68da, checked=1
+0
+Result from count_query: {'check_count': 1}
+INFO:     10.10.30.130:55104 - "POST /receipt/updateChecks HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55104 - "GET /rooms/findRoomId/62ab355f-a664-47aa-85a1-7a8cf82d68da HTTP/1.1" 200 OK
+INFO:     10.10.30.130:55104 - "GET /receipt/getReceiptItems/42 HTTP/1.1" 200 OK
+Updating userItemChecks with receipt_item_id=65, user_uuid=62ab355f-a664-47aa-85a1-7a8cf82d68da, checked=1
+0
+Result from count_query: {'check_count': 1}
+Updating userItemChecks with receipt_item_id=66, user_uuid=62ab355f-a664-47aa-85a1-7a8cf82d68da, checked=1
+0
+Result from count_query: {'check_count': 1}
+INFO:     10.10.30.130:55106 - "POST /receipt/updateChecks HTTP/1.1" 200 OK
+INFO:     10.10.18.75:61244 - "GET /docs HTTP/1.1" 200 OK
+INFO:     10.10.18.75:61244 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53380]
+INFO:     Stopping reloader process [53378]
