@@ -31,13 +31,14 @@ def get_room_participants_with_details(room_id: int):
 
         for row in result:
             print(row)
+            print(row[0], row[1], row[2])
 
         # 결과 변환
         participants = [
             {
-                "name": row[0],
-                "amountOfMoney": float(row[1]),
-                "isPaid": row[2]
+                "name": row[0],  # 그대로 문자열 사용
+                "amountOfMoney": float(row[1]) if row[1] is not None else 0.0,  # Decimal 변환
+                "isPaid": bool(row[2]) if row[2] is not None else False  # 정수형 0/1을 Boolean으로 변환
             }
             for row in result
         ]
