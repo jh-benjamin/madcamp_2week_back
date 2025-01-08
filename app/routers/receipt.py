@@ -66,14 +66,23 @@ async def update_is_paid_endpoint(room_id: int, user_uuid: str, is_paid: int):
             data={"error": result["error"]}
         )
 
-@router.get("/getReceiptSummary/{receipt_id}", response_model=ResponseSchema)
-async def get_receipt_summary(receipt_id: int):
+@router.get("/getReceiptSummary/{room_id}", response_model=ResponseSchema)
+async def get_receipt_summary(room_id: int):
     """
     receiptId를 기반으로 사용자별 메뉴 체크 상태와 금액 계산 결과 반환
     """
     try:
+        # Step 0: room_id를 사용하여 receipt_id 조회
+        receipt_id = get_receipt_id_by_room_id(room_id)
+        if not receipt_id:
+            return ResponseSchema(
+                status=404,
+                msg="해당 roomId에 대한 receiptId가 없습니다.",
+                data=None
+            )
+        
         # Step 1: Receipt에 참여한 사용자 정보 가져오기
-        participants = get_users_in_receipt(receipt_id)
+        participants = get_users_in_receipt(room_id)
         if not participants:
             return ResponseSchema(
                     status=404,
