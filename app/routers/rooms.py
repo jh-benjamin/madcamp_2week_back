@@ -99,8 +99,8 @@ async def get_user_rooms(user_uuid: str):
             status=200,
             msg="방 정보 검색 성공",
             data={
-                "hostedRooms": [room["title"] for room in hosted_rooms],
-                "participatingRooms": [room["title"] for room in participating_rooms],
+                "hostedRooms": [{"id": room["id"], "title": room["title"]} for room in hosted_rooms],
+                "participatingRooms": [{"id": room["id"], "title": room["title"]} for room in participating_rooms],
             }
         )
 
