@@ -2,13 +2,43 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
 from services.room_services import create_room_service
-from schemas.rooms import RoomRequest, Item
+from schemas.rooms import RoomRequest, UpdateRoomStatusRequest
 from schemas.response import ResponseSchema
 from db.database import get_user_by_name, get_rooms_by_user_uuid
-from db.room import get_hosted_rooms_by_user_uuid, get_participating_rooms_by_user_uuid, get_all_participating_rooms_by_user_uuid
+from db.room import get_hosted_rooms_by_user_uuid, get_participating_rooms_by_user_uuid, get_all_participating_rooms_by_user_uuid, update_room_status_in_db
 
 # 라우터 초기화
 router = APIRouter()
+
+@router.post("/updateRoomStatus", response_model=ResponseSchema)
+async def update_room_status(request: UpdateRoomStatusRequest):
+    """
+    특정 roomId의 status 값을 업데이트하는 API
+    """
+    try:
+        # DB 업데이트 함수 호출
+        success = update_room_status_in_db(request.roomId, request.status)
+
+        if not success:
+            raise HTTPException(status_code=404, detail="해당 roomId를 찾을 수 없습니다.")
+
+        return ResponseSchema(
+            status=200,
+            msg=f"roomId {request.roomId}의 상태가 {request.status}로 업데이트되었습니다.",
+            data=None
+        )
+
+    except HTTPException as e:
+        # HTTPException은 그대로 반환
+        raise e
+
+    except Exception as e:
+        # 기타 예외는 500 에러로 처리
+        return ResponseSchema(
+            status=500,
+            msg="상태 업데이트 중 오류 발생",
+            data=str(e)
+        )
 
 @router.get("/getRoomsByStatus/{user_uuid}", response_model=ResponseSchema)
 async def get_user_rooms_by_status(user_uuid: str):

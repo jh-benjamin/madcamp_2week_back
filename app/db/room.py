@@ -1,5 +1,36 @@
 from db.database import get_connection
 
+def update_room_status_in_db(room_id: int, status: int):
+    """
+    DB에서 특정 roomId의 status 값을 업데이트하는 함수
+    """
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        # SQL 쿼리 작성
+        update_query = """
+            UPDATE rooms
+            SET status = %s
+            WHERE id = %s
+        """
+        cursor.execute(update_query, (status, room_id))
+        connection.commit()
+
+        # 업데이트 성공 여부 확인
+        if cursor.rowcount == 0:
+            return False  # 해당 roomId가 없음을 의미
+
+        return True  # 업데이트 성공
+
+    except Exception as e:
+        raise e  # 예외를 라우터로 전달
+
+    finally:
+        # 연결 닫기
+        cursor.close()
+        connection.close()
+
 def get_hosted_rooms_by_user_uuid(user_uuid: str):
     """
     사용자가 호스트인 방을 가져오는 함수

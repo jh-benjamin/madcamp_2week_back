@@ -12,3 +12,7 @@ class RoomRequest(BaseModel):
     friend_uuids: List[str]  # 친구 UUID 리스트
     items: List[Item]
     total_price: str
+
+class UpdateRoomStatusRequest(BaseModel):
+    roomId: int
+    status: int
