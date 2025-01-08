@@ -26,6 +26,12 @@ def get_room_participants_with_details(room_id: int):
         cursor.execute(query, (room_id,))
         result = cursor.fetchall()
 
+        if not result:
+            return []  # 빈 리스트 반환
+
+        for row in result:
+            print(row)
+
         # 결과 변환
         participants = [
             {
