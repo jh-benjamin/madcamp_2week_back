@@ -110,16 +110,57 @@ def get_receipt_items_by_receipt_id(receipt_id: int):
     connection.close()
     return {item["itemName"]: item for item in items}
 
-def calculate_user_totals(user_checks, item_check_counts, receipt_items):
+def update_amount_of_money(room_id: int, user_uuid: str, amount_of_money: float):
+    """
+    roomId와 userUuid를 기반으로 roomParticipants 테이블의 amountOfMoney 값을 업데이트
+    """
+    query = """
+        UPDATE roomParticipants
+        SET amountOfMoney = %s
+        WHERE roomId = %s AND userUuid = %s
+    """
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        # 업데이트 실행
+        cursor.execute(query, (amount_of_money, room_id, user_uuid))
+        connection.commit()
+
+        return {"status": "success", "msg": f"roomId {room_id}, userUuid {user_uuid}의 amountOfMoney를 {amount_of_money}로 업데이트했습니다."}
+    except Exception as e:
+        print(f"Error updating amountOfMoney: {e}")
+        return {"status": "error", "msg": "amountOfMoney 값을 업데이트하는 중 오류가 발생했습니다.", "error": str(e)}
+    finally:
+        cursor.close()
+        connection.close()
+
+def calculate_user_totals(user_checks, item_check_counts, receipt_items, room_id: int):
+    """
+    사용자별 총 금액을 계산하고, roomParticipants 테이블의 amountOfMoney 필드를 업데이트.
+    """
     user_totals = {}
+
     for user_uuid, data in user_checks.items():
         total = 0
+
+        # 사용자별 총 금액 계산
         for item in data["items"]:
             item_name = item["name"]
             price = receipt_items[item_name]["price"]
             participants = item_check_counts.get(item_name, 1)  # 기본값 1
             total += price / participants
-        user_totals[user_uuid] = {"name": data["name"], "total": round(total, 2)}
+
+        # 소수점 2자리로 반올림
+        total = round(total, 2)
+
+        # 사용자별 총 금액 저장
+        user_totals[user_uuid] = {"name": data["name"], "total": total}
+
+        # DB에 총 금액 업데이트
+        update_result = update_amount_of_money(room_id, user_uuid, total)
+        print(update_result)  # 업데이트 결과를 로깅
+
     return user_totals
 
 def calculate_user_checks_and_item_counts(receipt_id: int):

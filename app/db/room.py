@@ -1,5 +1,51 @@
 from db.database import get_connection
 
+def get_room_participants_with_details(room_id: int):
+    """
+    방 ID를 기반으로 방에 속한 참가자들의 이름, 송금 금액, 결제 여부를 반환하는 함수.
+    """
+    try:
+        # DB 연결
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        # SQL 쿼리 작성
+        query = """
+        SELECT 
+            u.name,
+            rp.amountOfMoney,
+            rp.isPaid
+        FROM 
+            roomParticipants rp
+        JOIN 
+            users u ON rp.userUuid = u.uuid
+        WHERE 
+            rp.roomId = %s
+        """
+        # 쿼리 실행
+        cursor.execute(query, (room_id,))
+        result = cursor.fetchall()
+
+        # 결과 변환
+        participants = [
+            {
+                "name": row[0],
+                "amountOfMoney": float(row[1]),
+                "isPaid": row[2]
+            }
+            for row in result
+        ]
+
+        return participants
+
+    except Exception as e:
+        raise Exception(f"DB에서 방 참가자 정보를 가져오는 중 오류 발생: {e}")
+    
+    finally:
+        # DB 연결 종료
+        cursor.close()
+        connection.close()
+
 def update_room_status_in_db(room_id: int, status: int):
     """
     DB에서 특정 roomId의 status 값을 업데이트하는 함수

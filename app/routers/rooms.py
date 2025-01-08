@@ -5,11 +5,38 @@ from services.room_services import create_room_service
 from schemas.rooms import RoomRequest, UpdateRoomStatusRequest
 from schemas.response import ResponseSchema
 from db.database import get_user_by_name, get_rooms_by_user_uuid
-from db.room import get_hosted_rooms_by_user_uuid, get_participating_rooms_by_user_uuid, get_all_participating_rooms_by_user_uuid, update_room_status_in_db
+from db.room import get_hosted_rooms_by_user_uuid, get_participating_rooms_by_user_uuid, get_all_participating_rooms_by_user_uuid, update_room_status_in_db, get_room_participants_with_details
 
 # 라우터 초기화
 router = APIRouter()
 
+
+@router.get("/getRoomParticipants/{roomId}", response_model=ResponseSchema)
+async def get_room_participants(roomId: int):
+    """
+    방 ID를 기반으로 방 참가자 정보를 반환하는 엔드포인트.
+    """
+    try:
+        # DB에서 방 참가자 정보 가져오기
+        participants = get_room_participants_with_details(roomId)
+
+        if not participants:
+            raise HTTPException(status_code=404, detail="해당 방에 참가자가 없습니다.")
+
+        return ResponseSchema(
+            status=200,
+            msg="참가자 정보 조회 성공",
+            data=participants
+        )
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        return ResponseSchema(
+            status=500,
+            msg=f"참가자 정보를 가져오는 중 오류 발생: {e}",
+            data=[]
+        )
+        
 @router.post("/updateRoomStatus", response_model=ResponseSchema)
 async def update_room_status(request: UpdateRoomStatusRequest):
     """
