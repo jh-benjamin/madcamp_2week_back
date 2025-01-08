@@ -33,12 +33,12 @@ def update_room_status_in_db(room_id: int, status: int):
 
 def get_hosted_rooms_by_user_uuid(user_uuid: str):
     """
-    사용자가 호스트인 방을 가져오는 함수
+    사용자가 호스트인 방을 가져오는 함수 (status가 0이 아닌 방만 가져옴)
     """
     query = """
-        SELECT title 
+        SELECT id, title 
         FROM rooms
-        WHERE hostUuid = %s
+        WHERE hostUuid = %s AND status != 0
     """
     connection = get_connection()
     with connection.cursor() as cursor:
@@ -47,25 +47,26 @@ def get_hosted_rooms_by_user_uuid(user_uuid: str):
 
     connection.close()
 
-    return temp
+    return temp  # id와 title을 포함한 리스트 반환
 
 def get_participating_rooms_by_user_uuid(user_uuid: str):
     """
-    사용자가 참여 중인 방(호스트 제외)을 가져오는 함수
+    사용자가 참여 중인 방(호스트 제외, status가 0이 아닌 방만 가져옴)을 가져오는 함수
     """
     query = """
-        SELECT r.title 
+        SELECT r.id, r.title 
         FROM rooms r
         JOIN roomParticipants rp ON r.id = rp.roomId
-        WHERE rp.userUuid = %s AND r.hostUuid != %s
+        WHERE rp.userUuid = %s AND r.hostUuid != %s AND r.status != 0
     """
     connection = get_connection()
     with connection.cursor() as cursor:
         cursor.execute(query, (user_uuid, user_uuid))
         temp = cursor.fetchall()
+
     connection.close()
 
-    return temp
+    return temp  # id와 title을 포함한 리스트 반환
 
 def get_all_participating_rooms_by_user_uuid(user_uuid: str):
     """
