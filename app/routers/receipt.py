@@ -104,7 +104,7 @@ async def get_receipt_summary(room_id: int):
         user_checks, item_check_counts = calculate_user_checks_and_item_counts(receipt_id)
 
         # Step 4: 사용자별 총 금액 계산
-        user_totals = calculate_user_totals(user_checks, item_check_counts, receipt_items)
+        user_totals = calculate_user_totals(user_checks, item_check_counts, receipt_items, room_id)
 
         # Step 5: 아무도 체크하지 않은 메뉴 확인
         unchecked_items = [
