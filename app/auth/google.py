@@ -12,7 +12,7 @@ def verify_google_id_token(id_token_str: str):
         user_info = id_token.verify_oauth2_token(
             id_token_str,
             requests.Request(),
-            "984252637303-4adk5dif0m1m2cah4esuofdf68cucvdq.apps.googleusercontent.com"  # OAuth 2.0 클라이언트 ID
+            "568897327149-7fnbjul15in412m1cda9dqmsjncc2ubc.apps.googleusercontent.com"  # OAuth 2.0 클라이언트 ID
         )
         
         # 유효한 토큰이면 user_info 반환
