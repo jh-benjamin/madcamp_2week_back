@@ -53,6 +53,7 @@ async def update_is_paid_endpoint(room_id: int, user_uuid: str, is_paid: int):
     roomId와 userUuid를 기반으로 isPaid 값을 업데이트하는 API
     """
     result = update_is_paid(room_id, user_uuid, is_paid)
+    print(f"result:{result}")
     if result["status"] == "success":
         return ResponseSchema(
             status=200,
@@ -176,6 +177,7 @@ async def update_checks(request: UpdateCheckRequest):
         check_counts = {}
 
         # 각 receiptItemId와 checked 상태 업데이트
+        print(f"request:{request}")
         for update in request.updates:
             is_updated = update_user_item_check(
                 receipt_item_id=update.receiptItemId,
@@ -189,6 +191,9 @@ async def update_checks(request: UpdateCheckRequest):
             # 업데이트 후 해당 receiptItemId의 체크된 사용자 수 계산
             count = count_checked_users_by_receipt_item_id(update.receiptItemId)
             check_counts[update.receiptItemId] = count
+
+
+        print(f"check_counts: {check_counts}")
 
         return ResponseSchema(
             status=200,
