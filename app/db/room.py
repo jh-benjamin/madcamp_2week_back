@@ -12,6 +12,7 @@ def get_room_participants_with_details(room_id: int):
         # SQL 쿼리 작성
         query = """
         SELECT 
+            u.uuid,
             u.name,
             rp.amountOfMoney,
             rp.isPaid
