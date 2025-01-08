@@ -1,10 +1,51 @@
 from fastapi import APIRouter, HTTPException
 from schemas.response import ResponseSchema
 from db.database import update_user_item_check, count_checked_users_by_receipt_item_id, get_receipt_items_by_room_id, get_receipt_id_by_room_id
-from db.receipt import get_users_in_receipt, get_receipt_items_by_receipt_id, calculate_user_totals, calculate_user_checks_and_item_counts, update_is_paid
+from db.receipt import get_users_in_receipt, get_receipt_items_by_receipt_id, calculate_user_totals, calculate_user_checks_and_item_counts, update_is_paid, get_receipt_items_by_room_id, get_user_item_check_status
 from schemas.receipt import UpdateCheckRequest
 
 router = APIRouter()
+@router.get("/getReceiptItemsWithCheckStatus/{room_id}/{user_uuid}", response_model=ResponseSchema)
+async def get_receipt_items_with_check_status(room_id: int, user_uuid: str):
+    """
+    특정 roomId와 userUuid를 기반으로 메뉴명, 가격, 체크 여부를 반환하는 API
+    """
+    try:
+        # Step 1: 해당 roomId의 receiptItems 가져오기
+        receipt_items = get_receipt_items_by_room_id(room_id)
+        if not receipt_items:
+            return ResponseSchema(
+                status=404,
+                msg="해당 roomId에 대한 receiptItems가 없습니다.",
+                data=None
+            )
+
+        # Step 2: 각 receiptItem에 대해 userUuid가 체크했는지 확인
+        result = []
+        for item in receipt_items:
+            is_checked = get_user_item_check_status(receipt_item_id=item["id"], user_uuid=user_uuid)
+            result.append({
+                "itemName": item["itemName"],
+                "price": item["price"],
+                "checked": is_checked
+            })
+
+        return ResponseSchema(
+            status=200,
+            msg="메뉴와 체크 상태 조회 성공",
+            data=result
+        )
+
+    except HTTPException as e:
+        raise e
+
+    except Exception as e:
+        return ResponseSchema(
+            status=500,
+            msg="서버 내부 오류",
+            data={"error": str(e)}
+        )
+    
 
 @router.post("/updateIsPaid", response_model=ResponseSchema)
 async def update_is_paid_endpoint(room_id: int, user_uuid: str, is_paid: int):
