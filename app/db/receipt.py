@@ -1,5 +1,49 @@
 from db.database import get_connection
 
+def get_user_item_check_status(receipt_item_id: int, user_uuid: str):
+    """
+    특정 receiptItemId와 userUuid를 기반으로 사용자가 체크했는지 여부 반환
+    """
+    query = """
+        SELECT checked
+        FROM userItemChecks
+        WHERE receiptItemId = %s AND userUuid = %s
+    """
+    try:
+        connection = get_connection()
+        cursor = connection.cursor(dictionary=True)  # dictionary=True로 결과를 딕셔너리 형태로 반환
+        cursor.execute(query, (receipt_item_id, user_uuid))
+        result = cursor.fetchone()
+        return result["checked"] if result else False
+    except Exception as e:
+        print(f"Error in get_user_item_check_status: {e}")
+    finally:
+        cursor.close()
+        connection.close()
+
+def get_receipt_items_by_room_id(room_id: int):
+    """
+    특정 roomId에 해당하는 receiptItems 가져오기
+    """
+    query = """
+        SELECT ri.id, ri.itemName, ri.price
+        FROM receiptItems ri
+        JOIN receipts r ON ri.receiptId = r.id
+        WHERE r.roomId = %s
+    """
+    try:
+        connection = get_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute(query, (room_id,))
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        print(f"Error in get_receipt_items_by_room_id: {e}")
+        return []
+    finally:
+        cursor.close()
+        connection.close()
+
 def update_is_paid(room_id: int, user_uuid: str, is_paid: int):
     """
     roomId와 userUuid를 기반으로 roomParticipants의 isPaid 값을 업데이트
