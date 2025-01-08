@@ -26,24 +26,7 @@ def get_room_participants_with_details(room_id: int):
         cursor.execute(query, (room_id,))
         result = cursor.fetchall()
 
-        if not result:
-            return []  # 빈 리스트 반환
-
-        for row in result:
-            print(row)
-            print(row[0], row[1], row[2])
-
-        # 결과 변환
-        participants = [
-            {
-                "name": row[0],  # 그대로 문자열 사용
-                "amountOfMoney": float(row[1]) if row[1] is not None else 0.0,  # Decimal 변환
-                "isPaid": bool(row[2]) if row[2] is not None else False  # 정수형 0/1을 Boolean으로 변환
-            }
-            for row in result
-        ]
-
-        return participants
+        return result
 
     except Exception as e:
         raise Exception(f"DB에서 방 참가자 정보를 가져오는 중 오류 발생: {e}")
