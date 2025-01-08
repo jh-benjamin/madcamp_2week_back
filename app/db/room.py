@@ -17,10 +17,6 @@ def update_room_status_in_db(room_id: int, status: int):
         cursor.execute(update_query, (status, room_id))
         connection.commit()
 
-        # 업데이트 성공 여부 확인
-        if cursor.rowcount == 0:
-            return False  # 해당 roomId가 없음을 의미
-
         return True  # 업데이트 성공
 
     except Exception as e:
