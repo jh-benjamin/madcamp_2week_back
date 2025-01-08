@@ -11,7 +11,7 @@ def get_user_item_check_status(receipt_item_id: int, user_uuid: str):
     """
     try:
         connection = get_connection()
-        cursor = connection.cursor(dictionary=True)  # dictionary=True로 결과를 딕셔너리 형태로 반환
+        cursor = connection.cursor()  # dictionary=True로 결과를 딕셔너리 형태로 반환
         cursor.execute(query, (receipt_item_id, user_uuid))
         result = cursor.fetchone()
         return result["checked"] if result else False
@@ -33,7 +33,7 @@ def get_receipt_items_by_room_id(room_id: int):
     """
     try:
         connection = get_connection()
-        cursor = connection.cursor(dictionary=True)
+        cursor = connection.cursor()
         cursor.execute(query, (room_id,))
         result = cursor.fetchall()
         return result
